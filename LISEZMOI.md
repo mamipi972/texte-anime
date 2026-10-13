@@ -43,10 +43,66 @@ Quelques précisions sur les effets les plus particuliers :
 ## Prérequis
 
 - **GIMP 3.2**. Le greffon a été développé et testé avec GIMP 3.2.4 sous Windows 11. Les autres versions et les autres systèmes n'ont pas été testés.
-- **ffmpeg**, uniquement pour l'export MP4. Le WebP et le GIF sont exportés par GIMP lui-même.
-  - Windows : `winget install Gyan.FFmpeg`
-  - macOS : `brew install ffmpeg`
-  - Linux : `sudo apt install ffmpeg` (ou l'équivalent de votre distribution)
+- **ffmpeg**, uniquement pour l'export MP4. Le WebP et le GIF sont exportés par GIMP lui-même. Voir [Installer ffmpeg](#installer-ffmpeg) ci-dessous.
+
+## Installer ffmpeg
+
+ffmpeg est un outil gratuit qui assemble les images en vidéo. Le greffon l'appelle au moment de l'export MP4. Il doit donc être **installé et accessible depuis n'importe quel dossier** : c'est ce qu'on appelle être « dans le PATH ».
+
+### Windows — méthode 1 : winget (recommandée)
+
+winget est le gestionnaire de logiciels intégré à Windows 10 et 11. Il télécharge, installe et rend ffmpeg accessible en une seule commande.
+
+1. Ouvrez **PowerShell** : menu Démarrer, tapez `powershell`, puis Entrée. Les droits administrateur ne sont pas nécessaires.
+2. Tapez :
+   ```powershell
+   winget install Gyan.FFmpeg
+   ```
+3. La première fois, winget peut demander d'accepter les conditions de son catalogue : tapez `Y` puis Entrée.
+4. winget télécharge ffmpeg (la version pour Windows de gyan.dev, celle recommandée par le site officiel), vérifie le fichier, l'installe dans votre dossier utilisateur et l'ajoute au PATH.
+5. **Fermez PowerShell, rouvrez-le** et vérifiez :
+   ```powershell
+   ffmpeg -version
+   ```
+   Si des informations de version s'affichent, ffmpeg est prêt.
+6. **Relancez GIMP** s'il était ouvert : il ne voit ffmpeg qu'après un redémarrage.
+
+Commandes utiles par la suite :
+```powershell
+winget upgrade Gyan.FFmpeg     # mettre à jour ffmpeg
+winget uninstall Gyan.FFmpeg   # désinstaller ffmpeg
+```
+
+> **« winget n'est pas reconnu… »** : installez ou mettez à jour l'application **App Installer** depuis le Microsoft Store, puis recommencez. Si winget reste indisponible (PC professionnel verrouillé par exemple), utilisez la méthode 2.
+
+### Windows — méthode 2 : téléchargement depuis le site web
+
+Le site officiel [ffmpeg.org](https://www.ffmpeg.org/download.html) ne propose que le code source. Pour Windows, il renvoie vers des versions prêtes à l'emploi, dont celles de **gyan.dev**.
+
+1. Allez sur [gyan.dev/ffmpeg/builds](https://www.gyan.dev/ffmpeg/builds/). Depuis ffmpeg.org, c'est le lien « Windows builds from gyan.dev ».
+2. Dans la partie **release builds**, téléchargez **`ffmpeg-release-essentials.zip`**. La version *essentials* suffit pour le greffon.
+3. Décompressez l'archive. Renommez le dossier obtenu (par exemple `ffmpeg-8.1-essentials_build`) en **`ffmpeg`** et placez-le à la racine du disque. Vous devez obtenir le fichier `C:\ffmpeg\bin\ffmpeg.exe`.
+4. Ajoutez le dossier `bin` au PATH :
+   1. Menu Démarrer, tapez `variables d'environnement` et ouvrez **Modifier les variables d'environnement pour votre compte**.
+   2. Dans la liste du haut, sélectionnez **Path** puis cliquez sur **Modifier…**
+   3. Cliquez sur **Nouveau** et saisissez `C:\ffmpeg\bin`.
+   4. Validez avec **OK** dans chaque fenêtre.
+5. Ouvrez une **nouvelle** fenêtre PowerShell et vérifiez avec `ffmpeg -version`.
+6. **Relancez GIMP.**
+
+Pour mettre à jour, téléchargez la nouvelle archive et remplacez le contenu de `C:\ffmpeg`. Pour désinstaller, supprimez `C:\ffmpeg` et retirez la ligne `C:\ffmpeg\bin` du Path.
+
+### macOS et Linux
+
+- macOS (avec [Homebrew](https://brew.sh)) : `brew install ffmpeg`
+- Linux : `sudo apt install ffmpeg` (ou l'équivalent de votre distribution)
+
+### En cas de problème
+
+Si le greffon indique que ffmpeg est introuvable alors qu'il est installé :
+- vérifiez que `ffmpeg -version` fonctionne dans une **nouvelle** fenêtre PowerShell ;
+- fermez **complètement** GIMP puis relancez-le ;
+- en dernier recours, redémarrez l'ordinateur pour que Windows prenne en compte le nouveau PATH.
 
 ## Installation
 

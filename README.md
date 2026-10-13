@@ -43,10 +43,66 @@ A few notes on the more unusual effects:
 ## Requirements
 
 - **GIMP 3.2**. The plug-in was developed and tested with GIMP 3.2.4 on Windows 11. Other versions and other systems have not been tested.
-- **ffmpeg**, for MP4 export only. WebP and GIF are exported by GIMP itself.
-  - Windows: `winget install Gyan.FFmpeg`
-  - macOS: `brew install ffmpeg`
-  - Linux: `sudo apt install ffmpeg` (or your distribution's equivalent)
+- **ffmpeg**, for MP4 export only. WebP and GIF are exported by GIMP itself. See [Installing ffmpeg](#installing-ffmpeg) below.
+
+## Installing ffmpeg
+
+ffmpeg is a free tool that turns images into a video. The plug-in calls it during MP4 export, so it must be **installed and reachable from any folder**, which is what being "on the PATH" means.
+
+### Windows — option 1: winget (recommended)
+
+winget is the package manager built into Windows 10 and 11. It downloads ffmpeg, installs it and puts it on the PATH with a single command.
+
+1. Open **PowerShell**: Start menu, type `powershell`, then press Enter. Administrator rights are not needed.
+2. Type:
+   ```powershell
+   winget install Gyan.FFmpeg
+   ```
+3. The first time, winget may ask you to accept the terms of its catalog: type `Y` and press Enter.
+4. winget downloads ffmpeg (the Windows build from gyan.dev, the one recommended by the official website), checks the file, installs it in your user folder and adds it to the PATH.
+5. **Close PowerShell, open it again** and check:
+   ```powershell
+   ffmpeg -version
+   ```
+   If version information is displayed, ffmpeg is ready.
+6. **Restart GIMP** if it was open: it only sees ffmpeg after a restart.
+
+Useful commands later on:
+```powershell
+winget upgrade Gyan.FFmpeg     # update ffmpeg
+winget uninstall Gyan.FFmpeg   # uninstall ffmpeg
+```
+
+> **"winget is not recognized…"**: install or update the **App Installer** app from the Microsoft Store, then try again. If winget is still unavailable (on a locked-down work PC, for example), use option 2.
+
+### Windows — option 2: download from the website
+
+The official site [ffmpeg.org](https://www.ffmpeg.org/download.html) only provides source code. For Windows, it links to ready-to-use builds, including those from **gyan.dev**.
+
+1. Go to [gyan.dev/ffmpeg/builds](https://www.gyan.dev/ffmpeg/builds/). On ffmpeg.org, this is the "Windows builds from gyan.dev" link.
+2. In the **release builds** section, download **`ffmpeg-release-essentials.zip`**. The *essentials* build is enough for the plug-in.
+3. Unzip the archive. Rename the resulting folder (for example `ffmpeg-8.1-essentials_build`) to **`ffmpeg`** and move it to the root of your drive. You should end up with `C:\ffmpeg\bin\ffmpeg.exe`.
+4. Add the `bin` folder to the PATH:
+   1. Start menu, type `environment variables` and open **Edit environment variables for your account**.
+   2. In the top list, select **Path** and click **Edit…**
+   3. Click **New** and type `C:\ffmpeg\bin`.
+   4. Click **OK** in every window.
+5. Open a **new** PowerShell window and check with `ffmpeg -version`.
+6. **Restart GIMP.**
+
+To update, download the new archive and replace the contents of `C:\ffmpeg`. To uninstall, delete `C:\ffmpeg` and remove the `C:\ffmpeg\bin` line from the Path.
+
+### macOS and Linux
+
+- macOS (with [Homebrew](https://brew.sh)): `brew install ffmpeg`
+- Linux: `sudo apt install ffmpeg` (or your distribution's equivalent)
+
+### Troubleshooting
+
+If the plug-in says ffmpeg cannot be found although it is installed:
+- check that `ffmpeg -version` works in a **new** PowerShell window;
+- close GIMP **completely**, then start it again;
+- as a last resort, restart your computer so that Windows picks up the new PATH.
 
 ## Installation
 
