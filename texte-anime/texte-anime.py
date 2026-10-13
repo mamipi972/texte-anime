@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Texte animé — greffon pour GIMP 3
+# Copyright (C) 2026 mamipi972
+# SPDX-License-Identifier: GPL-3.0-or-later
 # Greffon GIMP 3.2 : moteur d'animation de texte.
 #
 #   Jusqu'à 3 écrans enchaînés, chacun avec son texte et son effet

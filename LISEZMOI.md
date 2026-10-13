@@ -156,3 +156,7 @@ Ces notes peuvent servir à d'autres auteurs de greffons :
 - **Les paramètres de dossier font planter GIMP sous Windows** : un paramètre dossier (`GFile`) est enregistré avec des barres obliques inverses que GIMP ne sait pas relire, ce qui fait planter le lancement suivant. Le dossier est donc enregistré comme du texte simple.
 - **Les polices ne sont pas forcément prêtes** quand GIMP est lancé en mode console (traitement par lots). Le greffon attend qu'elles soient chargées.
 - **Remplir une sélection vide remplit tout le calque.** Chaque rectangle est limité à l'image avant d'être dessiné.
+
+## Licence
+
+Ce greffon est distribué sous licence GNU GPL v3 ou ultérieure, comme GIMP. Voir le fichier [LICENSE](LICENSE).

@@ -156,3 +156,7 @@ These notes may help other plug-in authors:
 - **Folder parameters crash GIMP on Windows**: a `GFile` folder parameter is saved with backslashes that GIMP cannot read back, which makes the next launch crash. The folder is stored as plain text instead.
 - **Fonts may not be ready yet** when GIMP is started in console (batch) mode. The plug-in waits for them.
 - **Filling an empty selection fills the whole layer.** Every rectangle is clipped to the image before it is drawn.
+
+## License
+
+This plug-in is released under the GNU GPL v3 or later, like GIMP. See the [LICENSE](LICENSE) file.
